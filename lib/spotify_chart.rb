@@ -3,15 +3,10 @@ require 'open-uri'
 require 'pry'
 
 class SpotifyChart
-
-  attr_reader :base_url
-
-  def initialize
-    @base_url = "http://charts.spotify.com/api/charts/"
-  end
+ BASE_URL = "http://charts.spotify.com/api/tracks/"
 
   def get_url(preference, region)
-    string = "#{@base_url}#{preference}/#{region}/latest"
+    "#{BASE_URL}#{preference}/#{region}/weekly/latest"
   end
 
   def get_json(url)
