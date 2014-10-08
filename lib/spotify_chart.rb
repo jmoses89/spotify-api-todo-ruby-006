@@ -11,16 +11,11 @@ class SpotifyChart
   end
 
   def get_url(preference, region)
-    # return a string that is the base url + / + preference + / + region + / + latest
     string = "#{@base_url}#{preference}/#{region}/latest"
-    # binding.pry
   end
 
   def get_json(url)
-    # load json given a url here
-    # refer to the references if you have questions about this
-    spotify_json = JSON.load(open(url))
-
+    JSON.load(open(url))
   end
 
   def fetch_track_album_artist(music_hash)
@@ -32,7 +27,25 @@ class SpotifyChart
 
 
     result = "#{song} by #{artist} from the album #{album}"
-    # binding.pry
+   
+  end
+
+
+  def most_streamed(region)
+    url = get_url('most_streamed','us')
+    spotify_json = get_json(url)
+    fetch_track_album_artist(spotify_json)
+  end
+
+  def most_shared(region)
+    url = get_url('most_shared', 'us')
+    json = get_json(url)
+    fetch_track_album_artist(json)
+  end
+
+end
+
+ # binding.pry
     # example music_hash:
     # {  
     #   "tracks" => [  
@@ -56,30 +69,3 @@ class SpotifyChart
   
     # the track name, artist name, and album name should be the first track in the
     # tracks array
-  end
-
-
-  def most_streamed(region)
-    url = get_url('most_streamed','us')
-    # binding.pry
-    # call no get_url here, where preference is the string 'most_streamed',
-    # and set it equal to a variable
-    spotify_json = get_json(url)
-    # call on get_json here, using the string that get_url returns
-    fetch_track_album_artist(spotify_json)
-    # finally, call on fetch_track_album_artist using the 
-    # hash that get_json returns
-  end
-
-  def most_shared(region)
-    # call no get_url here, where preference is the string 'most_shared',
-    # and set it equal to a variable
-    url = get_url('most_shared', 'us')
-    # call on get_json here, using the string that get_url returns
-    json = get_json(url)
-    # finally, call on fetch_track_album_artist using the 
-    # hash that get_json returns
-    fetch_track_album_artist(json)
-  end
-
-end
